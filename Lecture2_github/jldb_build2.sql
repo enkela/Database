@@ -370,6 +370,19 @@ CREATE TABLE acctmanager
   CONSTRAINT acctmanager_amid_pk PRIMARY KEY (amid),
   CONSTRAINT acctmanager_region_ck
      CHECK (region IN ('N', 'NW', 'NE', 'S', 'SE', 'SW', 'W', 'E')));
+INSERT INTO acctmanager (amid, amfirst, amlast, amedate, amsal, amcomm, region)
+VALUES ('A101', 'John', 'Doe', TO_DATE('2023-01-15', 'YYYY-MM-DD'), 60000.00, 5000.00, 'NE');
+
+INSERT INTO acctmanager (amid, amfirst, amlast, amedate, amsal, amcomm, region)
+VALUES ('A102', 'Jane', 'Smith', TO_DATE('2022-03-20', 'YYYY-MM-DD'), 75000.00, 7500.00, 'SW');
+
+INSERT INTO acctmanager (amid, amfirst, amlast, amsal, region)
+VALUES ('A103', 'Peter', 'Jones', 55000.00, 'N');
+
+INSERT INTO acctmanager
+VALUES ('A104', 'Mary', 'Brown', TO_DATE('2024-07-01', 'YYYY-MM-DD'), 62000.00, 0, 'SE');
+INSERT INTO acctmanager
+VALUES ('M500', 'Mria', 'Brown', TO_DATE('2024-07-01', 'YYYY-MM-DD'), 62000.00, 0, 'SE');
 
 CREATE TABLE acctbonus
 (amid CHAR(4),
