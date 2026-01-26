@@ -49,7 +49,35 @@ P_SUB OUT NUMBER,
 p_TOTAL OUT number,
 p_ship OUT number
 );
-FUNCTION SHIP
+function ship_calc_Pf(p_qty  in number) return number;
+end;
+create or replace  PACKAGE BODY ORDERING_PKG iS
+PV_TOTAL_NUM NUMBER(3,2);
+function ship_calc_Pf(p_qty number) return number
+IS
+lv_ship_number number(5,2);
+begin
+if p_qty> 10 then lv_ship_number:=11.00;
+elsif p_qty> 5 then lv_ship_number:=8.00;
+else lv_ship_number:=5;
+end if;
+return lv_ship_number;
+end ship_calc_Pf;
+procedure ORDER_TOTAL_PP(
+P_BASKETID IN NUMBER,
+P_CNT OUT NUMBER,
+P_SUB OUT NUMBER,
+P_SHIP OUT NUMBER,
+P_TOTAL OUT NUMBER
+)IS  begin
+select sum(quantity),sum(quantity*price)
+into p_cnt, p_sub
+from bb_basketitem;
+P_SHIP:=ship_cALC_PF(p_cnt);
+p_total:=nvl(p_sub,0)+nvl(p_ship,0);
+end order_total_Pp;
+END ORDERING_PKG;
+
 ---------------------------------------
 create or replace trigger product_inventory_trg
 after update of orderplaced on bb_basket
@@ -72,4 +100,5 @@ declare
  set stock=stock-lv_chg_num
  where idproduct=basketitem_rec.idproduct;
  end loop;
+
  end;
